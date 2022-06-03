@@ -1,3 +1,5 @@
+package basicIO;
+
 import java.util.*;
 
 public class q2557{

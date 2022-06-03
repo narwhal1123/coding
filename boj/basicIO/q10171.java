@@ -1,3 +1,5 @@
+package basicIO;
+
 public class q10171 {
     public static void main(String[] args) {
 //\    /\
