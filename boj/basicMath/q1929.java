@@ -23,7 +23,7 @@ public class q1929 {
             }
 
             int isPrime = 0;
-            for (int i = 2; i * i < first; i++) {
+            for (int i = 2; i * i <= first; i++) {
                 if (first % i == 0) {
                     isPrime = 1;
                     break;
