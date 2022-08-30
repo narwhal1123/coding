@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class q11650 {
+public class q11651 {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int num = Integer.parseInt(bufferedReader.readLine());
@@ -19,10 +19,10 @@ public class q11650 {
         }
 
         Arrays.sort(point, (p1, p2) -> {
-            if(p1[0] == p2[0]) {
-                return p1[1] - p2[1];
-            } else {
+            if (p1[1] == p2[1]) {
                 return p1[0] - p2[0];
+            } else {
+                return p1[1] - p2[1];
             }
         });
 
