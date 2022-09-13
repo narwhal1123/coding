@@ -40,7 +40,7 @@ public class q17298 {
                 answer[i] = -1;
                 stack[endPointer++] = input[i];
             } else if (input[i] >= stack[endPointer - 1]) { // stack 맨 위의 값보다 크다면 스택을 내려가면서 값 비교
-                while (input[i] > stack[endPointer - 1]) {
+                while (input[i] >= stack[endPointer - 1]) {
                     endPointer--;
                     if (endPointer == 0) {
                         break;
@@ -48,11 +48,10 @@ public class q17298 {
                 }
                 if (endPointer == 0) {
                     answer[i] = -1;
-                    stack[endPointer++] = input[i];
                 } else {
                     answer[i] = stack[endPointer - 1];
-                    stack[endPointer++] = input[i];
                 }
+                stack[endPointer++] = input[i];
             } else if (input[i] < stack[endPointer - 1]) { // stack맨 위의 값보다 작다면 맨 위 값 출력 후 현재 값 스택에 넣어둠
                 answer[i] = stack[endPointer - 1];
                 stack[endPointer++] = input[i];
