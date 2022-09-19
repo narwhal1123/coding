@@ -22,6 +22,8 @@ package boj.queue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class q1021 {
@@ -37,36 +39,29 @@ public class q1021 {
             pick[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        int[] queue = new int[qSize];
-        int startPointer = 0;
-        int endPointer = qSize - 1;
-        int count = 0;
-
+        int totalPick = 0;
+        Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < qSize; i++) {
-            queue[i] = i + 1;
+            queue.add(i + 1);
         }
 
 
+        for (int i = 0; i < pickSize; i++) {
+            int leftRotate = 0;
+            while (queue.peek() != pick[i]) { // 값이 다르면 뒤로 옮기기
+                leftRotate++;
+                queue.add(queue.poll());
+            }
+
+            if (leftRotate <= queue.size() - leftRotate) {
+                totalPick += leftRotate;
+            } else {
+                totalPick += queue.size() - leftRotate;
+            }
+
+            queue.poll(); //값이 같으니까 뽑기
+        }
+
+        System.out.println(totalPick);
     }
 }
-
-
-/*
-10 3
-2 9 5
-8
-
-1 2 3 4 5 6 7 8 9 10 - 시작
-2 3 4 5 6 7 8 9 10 1  - 2번
-3 4 5 6 7 8 9 10 1 - 1번
-1 3 4 5 6 7 8 9 10 - 3번
-10 1 3 4 5 6 7 8 9 - 3번
-9 10 1 3 4 5 6 7 8 - 3번
-10 1 3 4 5 6 7 8 - 1번
-1 3 4 5 6 7 8 10 - 2번
-3 4 5 6 7 8 10 1 - 2번
-4 5 6 7 8 10 1 3 - 2번
-5 6 7 8 10 1 3 4 - 2번
-6 7 8 10 1 3 4 - 1번
-
- */
