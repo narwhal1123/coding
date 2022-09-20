@@ -57,28 +57,28 @@ public class q16139 {
         for (int i = 0; i < input.length(); i++) {
             inputArr[i] = input.charAt(i);
         }
-
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
-        char alpha = stringTokenizer.nextToken().charAt(0);
-        int[] prefixSum = new int[inputArr.length + 1];
-        for (int i = 1; i <= input.length(); i++) {
-            prefixSum[i] = prefixSum[i - 1];
-            if (inputArr[i - 1] == alpha) {
-                prefixSum[i]++;
-            }
-        }
-
-        int start = Integer.parseInt(stringTokenizer.nextToken());
-        int end = Integer.parseInt(stringTokenizer.nextToken());
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(-prefixSum[start] + prefixSum[end + 1]).append('\n');
-        for (int i = 1; i < num; i++) {
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            alpha = stringTokenizer.nextToken().charAt(0);
-            start = Integer.parseInt(stringTokenizer.nextToken());
-            end = Integer.parseInt(stringTokenizer.nextToken());
+        for (int i = 0; i < num; i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+            char alpha = stringTokenizer.nextToken().charAt(0);
+            int[] prefixSum = new int[inputArr.length + 1];
+            for (int j = 1; j <= input.length(); j++) {
+                prefixSum[j] = prefixSum[j - 1];
+                if (inputArr[j - 1] == alpha) {
+                    prefixSum[j]++;
+                }
+            }
+
+            int start = Integer.parseInt(stringTokenizer.nextToken());
+            int end = Integer.parseInt(stringTokenizer.nextToken());
+
             stringBuilder.append(-prefixSum[start] + prefixSum[end + 1]).append('\n');
+//            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+//            alpha = stringTokenizer.nextToken().charAt(0);
+//            start = Integer.parseInt(stringTokenizer.nextToken());
+//            end = Integer.parseInt(stringTokenizer.nextToken());
+//            stringBuilder.append(-prefixSum[start] + prefixSum[end + 1]).append('\n');
         }
         System.out.println(stringBuilder);
     }
