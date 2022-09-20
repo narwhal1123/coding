@@ -23,6 +23,8 @@ package boj.queue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class q5430 {
     public static void main(String[] args) throws IOException {
@@ -33,18 +35,54 @@ public class q5430 {
             int num = Integer.parseInt(bufferedReader.readLine());
             String array = bufferedReader.readLine();
 
+
+            String resultStr = array.substring(1, array.length() - 1);
+            String[] result = resultStr.split(",");
+            Deque<String> deque = new ArrayDeque<>();
+            for (int j = 0; j < result.length; j++) {
+                deque.add(result[j]);
+            }
+
+
             int countD = 0;
+            int countR = 0;
             for (int j = 0; j < function.length(); j++) {
                 if (function.charAt(j) == 'D') {
                     countD++;
+                    if (countR % 2 == 0) {
+                        deque.pollFirst();
+                    } else {
+                        deque.pollLast();
+                    }
+                } else if (function.charAt(j) == 'R') {
+                    countR++;
                 }
             }
 
+            StringBuilder stringBuilder = new StringBuilder();
             if (countD > num) {
-                System.out.println("error");
+                stringBuilder.append("error");
             } else {
-
+                stringBuilder.append("[");
+                if (countR % 2 == 0) {
+                    while (deque.size() > 0) {
+                        stringBuilder.append(deque.pollFirst());
+                        if (deque.size() != 0) {
+                            stringBuilder.append(",");
+                        }
+                    }
+                } else {
+                    while (deque.size() > 0) {
+                        stringBuilder.append(deque.pollLast());
+                        if (deque.size() != 0) {
+                            stringBuilder.append(",");
+                        }
+                    }
+                }
+                stringBuilder.append("]");
             }
+
+            System.out.println(stringBuilder);
         }
     }
 }
