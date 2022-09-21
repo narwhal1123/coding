@@ -48,6 +48,7 @@ a 7 10
 1
  */
 public class q16139 {
+/*  50점
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input = bufferedReader.readLine();
@@ -74,11 +75,38 @@ public class q16139 {
             int end = Integer.parseInt(stringTokenizer.nextToken());
 
             stringBuilder.append(-prefixSum[start] + prefixSum[end + 1]).append('\n');
-//            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-//            alpha = stringTokenizer.nextToken().charAt(0);
-//            start = Integer.parseInt(stringTokenizer.nextToken());
-//            end = Integer.parseInt(stringTokenizer.nextToken());
-//            stringBuilder.append(-prefixSum[start] + prefixSum[end + 1]).append('\n');
+        }
+        System.out.println(stringBuilder);
+    }
+*/
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String input = bufferedReader.readLine();
+        int num = Integer.parseInt(bufferedReader.readLine());
+
+        char[] inputArr = new char[input.length()];
+        for (int i = 0; i < input.length(); i++) {
+            inputArr[i] = input.charAt(i);
+        }
+
+        int[][] prefixSum = new int[26][inputArr.length + 1];
+        for (int i = 0; i < 26; i++) {
+            for (int j = 1; j <= input.length(); j++) {
+                prefixSum[i][j] = prefixSum[i][j - 1];
+                if (inputArr[j - 1] - 'a' == i) {
+                    prefixSum[i][j]++;
+                }
+            }
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < num; i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+            char alpha = stringTokenizer.nextToken().charAt(0);
+            int start = Integer.parseInt(stringTokenizer.nextToken());
+            int end = Integer.parseInt(stringTokenizer.nextToken());
+            stringBuilder.append(-prefixSum[alpha - 'a'][start] + prefixSum[alpha-'a'][end + 1]).append('\n');
         }
         System.out.println(stringBuilder);
     }
