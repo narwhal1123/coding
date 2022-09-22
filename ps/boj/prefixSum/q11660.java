@@ -1,4 +1,10 @@
 package boj.prefixSum;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 /*
 문제
 N×N개의 수가 N×N 크기의 표에 채워져 있다. (x1, y1)부터 (x2, y2)까지 합을 구하는 프로그램을 작성하시오. (x, y)는 x행 y열을 의미한다.
@@ -36,7 +42,37 @@ N×N개의 수가 N×N 크기의 표에 채워져 있다. (x1, y1)부터 (x2, y2
 64
  */
 public class q11660 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
 
+        int size = Integer.parseInt(stringTokenizer.nextToken());
+        int num = Integer.parseInt(stringTokenizer.nextToken());
+        int[][] inputArr = new int[size][size];
+        int[][] prefixSum = new int[size][size + 1];
+        for (int i = 0; i < size; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+            for (int j = 0; j < size; j++) {
+                inputArr[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                prefixSum[i][j + 1] = prefixSum[i][j] + inputArr[i][j];
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+            int x1 = Integer.parseInt(stringTokenizer.nextToken());
+            int y1 = Integer.parseInt(stringTokenizer.nextToken());
+            int x2 = Integer.parseInt(stringTokenizer.nextToken());
+            int y2 = Integer.parseInt(stringTokenizer.nextToken());
+
+            int answer = 0;
+            for (int j = x1; j <= x2; j++) {
+                answer += prefixSum[j - 1][y2] - prefixSum[j - 1][y1 - 1];
+            }
+            stringBuilder.append(answer).append('\n');
+        }
+
+        System.out.println(stringBuilder);
     }
 }
