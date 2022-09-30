@@ -49,18 +49,18 @@ public class q1931 {
             meeting[i][0] = Integer.parseInt(stringTokenizer.nextToken());
             meeting[i][1] = Integer.parseInt(stringTokenizer.nextToken());
         }
-        // 종료시간 순서대로 정렬해서 종료시간과 다음 미팅 시작시간을 비교
+        // 종료시간 순서대로 정렬
         Arrays.sort(meeting, (o1, o2) -> {
-            if (o1[1] > o2[1]) {
-                return 1;
-            } else if (o1[1] < o2[1]) {
-                return -1;
+            if (o1[1] == o2[1]) { // 종료시간이 같으면 시작시간이 빠른순으로
+                return o1[0] - o2[0];
+            } else {
+                return o1[1] - o2[1];
             }
-            return 0;
         });
 
-        int min = meeting[0][1];
-        int meetingCount = 1;
+        //  종료시간과 다음 미팅 시작시간을 비교
+        int min = 0;
+        int meetingCount = 0;
         for (int i = 0; i < num; i++) {
             if (meeting[i][0] < min) {
                 continue;
