@@ -52,13 +52,42 @@ public class q18111 {
         int width = Integer.parseInt(stringTokenizer.nextToken());
         int block = Integer.parseInt(stringTokenizer.nextToken());
 
+        int max = 0;
+        int min = 500;
         int[][] land = new int[height][width];
         for (int i = 0; i < height; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
             for (int j = 0; j < width; j++) {
                 land[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                if (max < land[i][j]) {
+                    max = land[i][j];
+                }
+                if (min > land[i][j]) {
+                    min = land[i][j];
+                }
             }
         }
 
+        int[][] timeNblock = new int[max - min + 1][2]; // 각 층당 [시간][블록수]
+        timeNblock[0][1] = block;
+        for (int k = 0; k <= max - min; k++) {
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (land[i][j] > k) { // 해당 칸의 높이가 최소층보다 높으면 해당 칸에서 블럭제거
+                        timeNblock[k][0] += (land[i][j] - (k + min)) * 2;
+                        timeNblock[k][1] += (land[i][j]);
+                    } else { // 해당 칸의 높이가 최소층보다 같거나 낮으면 해당칸에 블럭 넣음
+                        timeNblock[k][0] += (land[i][j] - (k + min));
+                        timeNblock[k][1] -= (land[i][j]);
+                    }
+                }
+            }
+            if (timeNblock[k][1] < 0) {
+                break;
+            }
+        }
+
+        System.out.println(timeNblock[max - min][0]);
+        System.out.println(timeNblock[max - min][1]);
     }
 }
