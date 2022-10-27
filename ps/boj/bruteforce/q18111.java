@@ -3,6 +3,7 @@ package boj.bruteforce;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /*
@@ -68,26 +69,35 @@ public class q18111 {
             }
         }
 
-        int[][] timeNblock = new int[max - min + 1][2]; // 각 층당 [시간][블록수]
-        timeNblock[0][1] = block;
+        int[][] timeNblock = new int[max - min + 1][3]; // 각 층당 시간, 블록수, 층수
         for (int k = 0; k <= max - min; k++) {
+            timeNblock[k][1] = block;
+            timeNblock[k][2] = min + k;
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    if (land[i][j] > k) { // 해당 칸의 높이가 최소층보다 높으면 해당 칸에서 블럭제거
-                        timeNblock[k][0] += (land[i][j] - (k + min)) * 2;
-                        timeNblock[k][1] += (land[i][j]);
+                    if (land[i][j] > k + min) { // 해당 칸의 높이가 최소층 + 추가된 층 보다 높으면 해당 칸에서 블럭제거
+                        timeNblock[k][0] += (land[i][j] - (k + min)) * 2; // 시간 : 제거된 갯수 * 2
+                        timeNblock[k][1] += (land[i][j] - (k + min)); // 블럭 갯수는 제거된 만큼 추가
                     } else { // 해당 칸의 높이가 최소층보다 같거나 낮으면 해당칸에 블럭 넣음
-                        timeNblock[k][0] += (land[i][j] - (k + min));
-                        timeNblock[k][1] -= (land[i][j]);
+                        timeNblock[k][0] += ((k + min) - land[i][j]); // 시간 : 블럭 넣은 갯수
+                        timeNblock[k][1] -= ((k + min) - land[i][j]); // 블럭 넣은 만큼 갯수 빠짐
                     }
                 }
             }
-            if (timeNblock[k][1] < 0) {
+        }
+
+        Arrays.sort(timeNblock, (t0, t1) ->{ // 시간 짧은 순서, 시간 같으면 블럭 높은 순서
+            if (t0[0] == t1[0]) {
+                return t1[2] - t0[2];
+            } else {
+                return t0[0] - t1[0];
+            }
+        });
+        for (int i = 0; i <= max - min; i++) {
+            if (timeNblock[i][1] >= 0) {
+                System.out.printf("%d %d", timeNblock[i][0], timeNblock[i][2]);
                 break;
             }
         }
-
-        System.out.println(timeNblock[max - min][0]);
-        System.out.println(timeNblock[max - min][1]);
     }
 }
