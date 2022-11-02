@@ -11,7 +11,7 @@ public class Test2 {
 
         System.out.printf("%s\n", String.format("%02d", temp));
 
-        String input = "jyh@kcnet.co.kr|don@kcnet.co.kr";
+        String input = "abc@abcd.co.kr|bcd@bcd.co.kr";
         String[] inputArr = input.split("[|]");
         for (int i = 0; i < inputArr.length; i++) {
             System.out.println(inputArr[i]);

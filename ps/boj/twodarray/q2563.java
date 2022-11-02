@@ -3,6 +3,8 @@ package boj.twodarray;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 /*
 문제
@@ -33,9 +35,31 @@ import java.io.InputStreamReader;
 public class q2563 {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int count = Integer.parseInt(bufferedReader.readLine());
+        int paperCount = Integer.parseInt(bufferedReader.readLine());
 
-        boolean[][] paper = new boolean[100][100];
+        boolean[][] paper = new boolean[101][101];
+        for (int i = 0; i < paperCount; i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+            int xAxis = Integer.parseInt(stringTokenizer.nextToken());
+            int yAxis = Integer.parseInt(stringTokenizer.nextToken());
 
+            for (int j = xAxis; j < xAxis + 10; j++) {
+                for (int k = yAxis; k < yAxis + 10; k++) {
+                    paper[j][k] = true;
+                }
+            }
+        }
+
+
+        int count = 0;
+        for (int i = 0; i < 101; i++) {
+            for (int j = 0; j < 101; j++) {
+                if (paper[i][j] == true) {
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
     }
 }
