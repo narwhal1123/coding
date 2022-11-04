@@ -22,6 +22,7 @@ n개의 정수로 이루어진 임의의 수열이 주어진다. 우리는 이 �
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class q1912 {
@@ -30,20 +31,21 @@ public class q1912 {
         int input = Integer.parseInt(bufferedReader.readLine());
 
         int[] inputArr = new int[input];
-        int[] prefixSum = new int[input];
+        int[] sum = new int[input];
 
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
         for (int i = 0; i < input; i++) {
             inputArr[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        prefixSum[0] = inputArr[0];
+        sum[0] = inputArr[0];
         for (int i = 1; i < input; i++) {
-            prefixSum[i] = prefixSum[i-1] + inputArr[i];
+            // sum[i]는 inputArr[i]의 값과 이전까지의 sum에 inputArr[i]를 더한 값을 비교해서 큰것을 저장
+            // 더한값이 크면 계속 더해지는거고 아니면 그 지점부터 새로 더하기 시작한다
+            sum[i] = Math.max(inputArr[i], sum[i - 1] + inputArr[i]);
         }
 
-
-
-
+        Arrays.sort(sum);
+        System.out.println(sum[input - 1]);
     }
 }
