@@ -49,11 +49,24 @@ public class q2579 {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int count = Integer.parseInt(bufferedReader.readLine());
 
-        int[] stairs = new int[count];
-        for (int i = 0; i < count; i++) {
+        int[] stairs = new int[count + 1];
+        stairs[0] = 0;
+        for (int i = 1; i <= count; i++) {
             stairs[i] = Integer.parseInt(bufferedReader.readLine());
         }
 
+        // 각 계단에 도착했을때의 최대값을 구한다
+        int[] sum = new int[count + 1];
+        sum[0] = stairs[0];
+        sum[1] = stairs[1];
+        if (count > 1) { // 계단이 2칸 이상일때
+            sum[2] = Math.max(stairs[1], stairs[0]) + stairs[2];
+        }
+        for (int i = 3; i <= count; i++) {
+            // 1칸1칸 / 2칸
+            sum[i] = Math.max(stairs[i - 1] + sum[i - 3], sum[i - 2]) + stairs[i];
+        }
 
+        System.out.println(sum[count]);
     }
 }
