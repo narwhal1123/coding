@@ -48,16 +48,18 @@ public class q2156 {
         int[] totalDrink = new int[glasses];
         totalDrink[0] = wine[0];
         if (glasses > 1) {
-            totalDrink[1] = Math.max(0, wine[0]) + wine[1]; // 두칸 / 한칸 한칸
+            totalDrink[1] = Math.max(0, totalDrink[0]) + wine[1]; // 두칸 / 한칸 한칸
         }
         if (glasses > 2) {
-            totalDrink[2] = Math.max(wine[0], wine[1]) + wine[2]; // 한칸 두칸 / 두칸 한칸
+            totalDrink[2] = Math.max(totalDrink[0], wine[1]) + wine[2]; // 한칸 두칸 / 두칸 한칸
         }
-        for (int i = 3; i < glasses; i++) {
-            totalDrink[i] = Math.max(wine[i - 1] + totalDrink[i - 3], totalDrink[i - 2]) + wine[i]; // i번째 한칸 두칸 / i번째 두칸
+        if (glasses > 3) {
+            totalDrink[3] = Math.max(Math.max(totalDrink[0], totalDrink[1]), Math.max(wine[2], totalDrink[0] + wine[2])) + wine[3]; // 한칸 세칸 / 두칸 두칸 / 세칸(2가지 : 1+2, 0+3) 한칸
         }
-        //세 칸 띄우는게 최적인 경우가 있어서 오답
-        
+        for (int i = 4; i < glasses; i++) {
+            totalDrink[i] = Math.max(Math.max(wine[i - 1] + totalDrink[i - 3], totalDrink[i - 3]), Math.max(wine[i - 1] + totalDrink[i - 4], totalDrink[i - 2])) + wine[i]; // i번째오기 전에 - 한칸 두칸 / 세칸 / 한칸 세칸 / 두칸
+        }
+
         Arrays.sort(totalDrink);
         System.out.println(totalDrink[glasses - 1]);
         bufferedReader.close();
