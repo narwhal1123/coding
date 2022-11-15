@@ -3,6 +3,7 @@ package boj.dynamicProgramming;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /*
@@ -34,10 +35,18 @@ public class q11053 {
             arr[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        int[] dp = new int[input];
+        int[] length = new int[input];
+        for (int i = 0; i < input; i++) {
+            length[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    length[i] = Math.max(length[i], length[j] + 1);
+                }
+            }
+        }
 
-
-
+        Arrays.sort(length);
+        System.out.println(length[input - 1]);
         bufferedReader.close();
     }
 }
